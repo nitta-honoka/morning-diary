@@ -1,0 +1,91 @@
+.App {
+  background: rgb(236, 236, 236);
+  > main {
+    padding: 10px 20px;
+  }
+
+  > footer {
+    height: 50px;
+    margin-top: 10px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ant-card {
+    margin-top: 10px;
+  }
+
+  .App-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: #fff;
+
+    > img {
+      width: 40px;
+      height: 40px;
+    }
+
+    > h2 {
+      margin-left: 8px;
+      margin-bottom: 0;
+      color: rgb(18, 150, 220);
+    }
+  }
+}
+
+.diary-header {
+  height: 80px;
+
+  .ant-card-body {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 24px;
+
+    > div:first-child {
+      display: flex;
+      align-items: center;
+      width: 80px;
+
+      > h2 {
+        margin-bottom: 0;
+      }
+      > span {
+        margin-left: 5px;
+        line-height: 1.2;
+        > p {
+          width: 100px;
+          margin-bottom: 0;
+        }
+      }
+    }
+    > div:last-child {
+      display: flex;
+      align-items: center;
+      margin-left: 80px;
+
+      > span {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+.ant-card:not(:first-child) {
+  margin-top: 10px;
+
+  .ant-card-body {
+    padding: 0;
+
+    > textarea {
+      padding: 5px;
+    }
+  }
+
+  .ant-input {
+    border: .5px solid #e8e8e8;
+  }
+}
