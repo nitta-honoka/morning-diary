@@ -57,7 +57,7 @@ MorningDiary.prototype = {
   init: function () {
     // this.id = new BigNumber(0)
   },
-  
+
   save: function (author, date, todo, learn, relationship, health, work, financial, happiness, dream, emoji) {
     if (!date) {
       throw new Error('empty date')
@@ -66,7 +66,7 @@ MorningDiary.prototype = {
     if (!Blockchain.verifyAddress(author)) {
       throw new Error('invalid author')
     }
-    const id = author + date
+    const id = author + '-' + date
     const diaryItem = new DiaryItem()
     diaryItem.id = id
     diaryItem.date = date
@@ -79,24 +79,28 @@ MorningDiary.prototype = {
     diaryItem.happiness = happiness
     diaryItem.dream = dream
     diaryItem.emoji = emoji
-    
+
     this.diaryList.put(id, diaryItem)
     this._saveUserList(author, id)
     return 'success'
   },
-  
+
   // _deletePreDiary: function(id, author) {
   //   const ids = this.userList.get(author) || []
   //   if (ids.indexOf(id) > -1) {
   //     this.diaryList.delete(id)
   //   }
   // },
-  
+
   _saveUserList: function(author, id) {
     let ids = this.userList.get(author) || []
+    if (ids.indexOf(id) > -1) {
+      // id 已存在，不重复保存
+      return
+    }
     this.userList.put(author, ids.concat(id))
   },
-  
+
   getDiaryList: function (author) {
     author = author || Blockchain.transaction.from
     if (!author || !Blockchain.verifyAddress(author)) {
@@ -105,7 +109,7 @@ MorningDiary.prototype = {
     const ids = this.userList.get(author) || []
     return this._getAllDiaryList(ids)
   },
-  
+
   _getAllDiaryList: function(ids) {
     let result = []
     if (ids && ids.length) {
