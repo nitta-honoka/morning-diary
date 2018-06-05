@@ -11,7 +11,8 @@ import Nebpay from 'nebpay'
 const {TextArea} = Input
 const mainnetUrl = "https://pay.nebulas.io/api/mainnet/pay"
 const testnetUrl = "https://pay.nebulas.io/api/pay"
-const dappAddr = 'n1r5g2XYCw4SbyCY34VBsCi9vfk7wHiLWSJ'
+// const dappAddr = 'n1r5g2XYCw4SbyCY34VBsCi9vfk7wHiLWSJ' // testnet
+const dappAddr = 'n1eTQf5GecGZfL6sPy4uAcs28D3R5mGH33Q'
 const nebpay = new Nebpay()
 
 class App extends Component {
@@ -86,7 +87,7 @@ class App extends Component {
     const callArgs = `["", "${dateStr}", "${todo}", "${learn}", "${relationship}", "${health}", "${work}", "${financial}", "${happiness}", "${dream}", "${emoji}"]`
     message.loading('交易完成后将自动保存日记，请稍等...', 0)
     this.serialNumber = nebpay.call(dappAddr, '0', callFunc, callArgs, {
-      callback: testnetUrl,
+      callback: mainnetUrl,
       listener: res => {
         if (res === 'Error: Transaction rejected by user') {
           message.destroy()
@@ -100,7 +101,7 @@ class App extends Component {
   }
   
   querySaveInfo = () => {
-    nebpay.queryPayInfo(this.serialNumber, {callback: testnetUrl})
+    nebpay.queryPayInfo(this.serialNumber, {callback: mainnetUrl})
       .then(resp => {
         const result = JSON.parse(resp)
         if (result.code === 0 && result.data.status === 1) {
@@ -123,7 +124,7 @@ class App extends Component {
     const callFunc = 'getDiaryList'
     const callArgs = `[]`
     nebpay.simulateCall(dappAddr, '0', callFunc, callArgs, {
-      callback: testnetUrl,
+      callback: mainnetUrl,
       listener: resp => {
         let list = JSON.parse(resp.result) || []
         const data = {}
