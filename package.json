@@ -7,6 +7,7 @@
     "emoji-mart": "^2.6.1",
     "emojione": "^3.1.4",
     "moment": "^2.22.1",
+    "nebpay": "^0.0.5",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-emoji-render": "^0.4.4",
