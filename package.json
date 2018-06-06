@@ -56,7 +56,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js && rm -rf docs && mv build docs",
+    "build": "node scripts/build.js && rm -rf docs && mv build docs"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.7.0",
