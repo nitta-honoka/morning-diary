@@ -6,14 +6,14 @@ import {Calendar, Card, Modal, Button, Popover, Input, message, Alert, Select} f
 import coffee from './assets/coffee.svg'
 import moment from 'moment'
 import emojione from 'emojione'
-import Nebpay from 'nebpay'
+import NebPay from 'nebpay.js'
 
 const {TextArea} = Input
 const mainnetUrl = "https://pay.nebulas.io/api/mainnet/pay"
 const testnetUrl = "https://pay.nebulas.io/api/pay"
 // const dappAddr = 'n1r5g2XYCw4SbyCY34VBsCi9vfk7wHiLWSJ' // testnet
 const dappAddr = 'n1eTQf5GecGZfL6sPy4uAcs28D3R5mGH33Q'
-const nebpay = new Nebpay()
+const nebpay = new NebPay()
 
 class App extends Component {
   state = {
@@ -116,6 +116,7 @@ class App extends Component {
         if (result.code === 0 && result.data.status === 1) {
           // 交易成功且打包上链
           clearInterval(this.queryInterval)
+          this.queryCount = 0
           message.destroy()
           this.onModalCancel()
           message.success('日记保存成功!')
@@ -124,6 +125,7 @@ class App extends Component {
       })
       .catch(err => {
         clearInterval(this.queryInterval)
+        this.queryCount = 0
         message.error('日记保存失败，请重新保存')
         console.error(err)
       })
@@ -157,6 +159,8 @@ class App extends Component {
   }
 
   onModalCancel = () => {
+    clearInterval(this.queryInterval)
+    this.queryCount = 0
     this.setState({
       editVisible: false,
       confirmLoading: false,
@@ -171,7 +175,6 @@ class App extends Component {
       happiness: '',
       dream: ''
     })
-    clearInterval(this.queryInterval)
   }
 
   onAboutUsShow = () => {
@@ -251,7 +254,6 @@ class App extends Component {
     const { diaryData, date, lastYear } = this.state
     const dateStr = `${lastYear}${moment().format('MMDD')}`
     const data = diaryData[dateStr]
-    console.log('date is %s, data is %o', dateStr, data)
     const options = (() => {
       let opts = []
       for (let i = moment().subtract(1, 'years').year(); i >= 2000; i --) {
