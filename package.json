@@ -18,14 +18,16 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build && rm -rf docs && mv build docs",
     "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-app-rewired eject"
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.7.0",
     "react-app-rewire-hot-loader": "^1.0.1",
     "react-app-rewire-less": "^2.1.1",
     "react-app-rewired": "^1.5.2",
-    "react-hot-loader": "^4.2.0"
+    "react-hot-loader": "^4.2.0",
+    "react-scripts-plugin-no-minify": "^0.3.2",
+    "uglifyjs-webpack-plugin": "^1.2.5"
   },
   "homepage": "."
 }
