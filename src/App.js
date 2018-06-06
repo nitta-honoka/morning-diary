@@ -1,3 +1,4 @@
+
 import './App.less'
 import React, {Component} from 'react'
 import {hot} from 'react-hot-loader'
@@ -362,7 +363,7 @@ class App extends Component {
           </Card>
           {
             TITLE_CONF.map(conf => (
-              <Card title={conf.title} key={conf.value} extra={conf.extra}>
+              <Card title={conf.label} key={conf.value} extra={conf.extra}>
                 <TextArea rows={5} value={this.state[conf.value]}
                           onChange={e => this.onDiaryInput(e.target.value, conf.value)}/>
               </Card>

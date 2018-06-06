@@ -4,30 +4,71 @@
   "private": true,
   "dependencies": {
     "antd": "^3.5.4",
+    "autoprefixer": "7.1.6",
+    "babel-core": "6.26.0",
+    "babel-eslint": "7.2.3",
+    "babel-jest": "20.0.3",
+    "babel-loader": "7.1.2",
+    "babel-preset-react-app": "^3.1.1",
+    "babel-runtime": "6.26.0",
+    "case-sensitive-paths-webpack-plugin": "2.1.1",
+    "chalk": "1.1.3",
+    "css-loader": "0.28.7",
+    "dotenv": "4.0.0",
+    "dotenv-expand": "4.2.0",
     "emoji-mart": "^2.6.1",
     "emojione": "^3.1.4",
+    "eslint": "4.10.0",
+    "eslint-config-react-app": "^2.1.0",
+    "eslint-loader": "1.9.0",
+    "eslint-plugin-flowtype": "2.39.1",
+    "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-jsx-a11y": "5.1.1",
+    "eslint-plugin-react": "7.4.0",
+    "extract-text-webpack-plugin": "3.0.2",
+    "file-loader": "1.1.5",
+    "fs-extra": "3.0.1",
+    "html-webpack-plugin": "2.29.0",
+    "jest": "20.0.4",
+    "less-loader": "^4.1.0",
     "moment": "^2.22.1",
     "nebpay.js": "^0.1.0",
+    "object-assign": "4.1.1",
+    "postcss-flexbugs-fixes": "3.2.0",
+    "postcss-loader": "2.0.8",
+    "promise": "8.0.1",
+    "raf": "3.4.0",
     "react": "^16.4.0",
+    "react-dev-utils": "^5.0.1",
     "react-dom": "^16.4.0",
     "react-emoji-render": "^0.4.4",
+    "react-hot-loader": "^4.3.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.4"
+    "react-scripts": "^1.1.4",
+    "resolve": "1.6.0",
+    "style-loader": "0.19.0",
+    "sw-precache-webpack-plugin": "0.11.4",
+    "url-loader": "0.6.2",
+    "webpack": "3.8.1",
+    "webpack-dev-server": "2.9.4",
+    "webpack-manifest-plugin": "1.3.2",
+    "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build && rm -rf docs && mv build docs",
-    "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js && rm -rf docs && mv build docs",
   },
   "devDependencies": {
     "babel-plugin-import": "^1.7.0",
-    "react-app-rewire-hot-loader": "^1.0.1",
-    "react-app-rewire-less": "^2.1.1",
-    "react-app-rewired": "^1.5.2",
-    "react-hot-loader": "^4.2.0",
-    "react-scripts-plugin-no-minify": "^0.3.2",
-    "uglifyjs-webpack-plugin": "^1.2.5"
+    "less": "^3.0.4"
   },
-  "homepage": "."
+  "homepage": ".",
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  }
 }
