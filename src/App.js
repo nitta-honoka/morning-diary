@@ -33,12 +33,12 @@ class App extends Component {
     happiness: '', // 快乐
     dream: '' // 梦想
   }
-  
+
   componentDidMount() {
     this.getDiaryList()
     this.getAddress()
   }
-  
+
   getAddress() {
     // 获得绑定钱包地址
     window.postMessage({
@@ -46,14 +46,14 @@ class App extends Component {
       'data': {},
       'method': 'getAccount'
     }, '*')
-    
+
     window.addEventListener('message', e => {
       if (e.data && e.data.data && e.data.data.account) {
         this.setState({address: e.data.data.account})
       }
     })
   }
-  
+
   onDateSelect(date) {
     const { diaryData } = this.state
     const data = diaryData[date.format('YYYYMMDD')] || {}
@@ -64,7 +64,7 @@ class App extends Component {
       editVisible: true
     })
   }
-  
+
   saveDiary = () => {
     const {
       date,
@@ -78,7 +78,7 @@ class App extends Component {
       happiness,
       dream,
     } = this.state
-    
+
     if (!emoji) {
       return message.error('请选择一个 emoji 呦', 1500)
     }
@@ -96,11 +96,20 @@ class App extends Component {
         }
       }
     })
-    
+
     this.queryInterval = setInterval(this.querySaveInfo, 10000)
   }
-  
+
   querySaveInfo = () => {
+    if (this.queryCount > 4) {
+      // 4 次轮询未通过判为超时
+      message.destroy()
+      message.error('交易超时，请稍后再试')
+      clearInterval(this.queryInterval)
+      return this.queryCount = 0
+    }
+
+    this.queryCount = this.queryCount + 1
     nebpay.queryPayInfo(this.serialNumber, {callback: mainnetUrl})
       .then(resp => {
         const result = JSON.parse(resp)
@@ -119,7 +128,7 @@ class App extends Component {
         console.error(err)
       })
   }
-  
+
   getDiaryList = () => {
     const callFunc = 'getDiaryList'
     const callArgs = `[]`
@@ -135,7 +144,7 @@ class App extends Component {
       }
     })
   }
-  
+
   dateCellRender(date) {
     const { diaryData } = this.state
     const dateStr = date.format('YYYYMMDD')
@@ -146,7 +155,7 @@ class App extends Component {
       )
     }
   }
-  
+
   onModalCancel = () => {
     this.setState({
       editVisible: false,
@@ -164,7 +173,7 @@ class App extends Component {
     })
     clearInterval(this.queryInterval)
   }
-  
+
   onAboutUsShow = () => {
     Modal.info({
       title: '帮助&反馈',
@@ -172,12 +181,12 @@ class App extends Component {
       content: (
         <div>
           <h2>晨间日记是什么？</h2>
-          
+
           <p>晨间日记就是利用早晨的时间记录一段文字，帮助自己提高效率的工具，由佐藤传出版的<a href="https://book.douban.com/subject/3744041/">《晨间日记的奇迹》</a>中提出了该概念，通过自问自答的方式引领自己在每天早晨深入地思考与复盘。
           </p>
-          
+
           <h2>和普通日记有什么区别？</h2>
-          
+
           <ol>
             <li>冷静之后再写的大不同。经过一个晚上的时间，能更加客观的看待问题</li>
             <li>短时间内可正确做记录。而且对前一天的事情还记忆犹新，留下正确记录</li>
@@ -185,9 +194,9 @@ class App extends Component {
             <li>隔天早晨再次做确认、提高执行力。隔天早上检视前一天自己所写下的未来日记，执行力也会跟着提高</li>
             <li>有效<strong>治愈</strong>赖床！</li>
           </ol>
-          
+
           <h2>使用攻略</h2>
-          
+
           <ol>
             <li>本应用基于<a href="https://nebulas.io/">星云链</a>驱动，WEB 端使用请安装<a
               href="https://github.com/ChengOrangeJu/WebExtensionWallet">星云钱包插件</a>，移动端使用请安装<a
@@ -198,13 +207,13 @@ class App extends Component {
             <li>可查看历史上的今天，您都留下了怎样的记录</li>
             <li>仅保存日记需要消费少量 GAS</li>
           </ol>
-          
+
           <h2>联系开发者</h2>
           <p>欢迎提交意见与反馈，可通过 <a href='mailto:xal821792703@gmail.com'>邮件</a> 或 <a href="https://github.com/nitta-honoka/morning-diary/issues">ISSUE</a> 的方式联系我们</p>
-          
+
           <h2>星云激励计划</h2>
           <p>欢迎参加星云链开发者<a href="https://incentive.nebulas.io/cn/signup.html?invite=LGfSR">激励活动</a>，用一杯下午茶的时间赢取 NAS 奖励</p>
-          
+
           <h3>现在，让我们开始享受每日清晨的奇迹时光吧！</h3>
         </div>
       ),
@@ -212,22 +221,22 @@ class App extends Component {
       }
     })
   }
-  
+
   onEmojiPick(emoji) {
     this.setState({
       emojiCol: emoji.colons,
       emoji: emoji.id
     })
   }
-  
+
   onDiaryInput = (v, key) => {
     this.setState({[key]: v})
   }
-  
+
   onMemorySelect = v => {
     this.setState({lastYear: v})
   }
-  
+
   get EmojiBox() {
     const { emoji } = this.state
     return (
@@ -237,7 +246,7 @@ class App extends Component {
                    onSelect={emoji => this.onEmojiPick(emoji)}/>
     )
   }
-  
+
   get MemoryBox() {
     const { diaryData, date, lastYear } = this.state
     const dateStr = `${lastYear}${moment().format('MMDD')}`
@@ -262,7 +271,7 @@ class App extends Component {
         <span style={{marginLeft: '8px'}}>年的今天</span>
       </div>
     )
-    
+
     if (data) {
       return (
         <Card title={Title} bordered={false} className='memory-box'>
@@ -288,7 +297,7 @@ class App extends Component {
       )
     }
   }
-  
+
   render() {
     const {
       confirmLoading,
@@ -297,7 +306,7 @@ class App extends Component {
       emojiCol,
       date,
     } = this.state
-    
+
     return (
       <div className="App">
         <header className="App-header">
