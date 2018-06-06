@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-app-rewired build && cp -r build ../docs",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-app-rewired eject"
   },
@@ -26,5 +26,6 @@
     "react-app-rewire-less": "^2.1.1",
     "react-app-rewired": "^1.5.2",
     "react-hot-loader": "^4.2.0"
-  }
+  },
+  "homepage": "."
 }
